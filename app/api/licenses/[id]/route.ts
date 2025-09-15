@@ -1,4 +1,3 @@
-// app/api/licenses/[id]/route.ts
 import { NextResponse } from "next/server";
 import prisma from "@/lib/prisma";
 import { cookies } from "next/headers";
@@ -19,17 +18,16 @@ async function getUser() {
 
 export async function GET(
   req: Request,
-  context: { params: { id: string } }
+  { params }: { params: { id: string } }
 ) {
   try {
     const user = await getUser();
     if (!user) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
 
-    const id = Number(context.params.id);
+    const id = Number(params.id);
     const license = await prisma.license.findUnique({ where: { id } });
     if (!license) return NextResponse.json({ error: "License not found" }, { status: 404 });
 
-    // Only admin or owning reseller can view
     if (user.role === "reseller" && license.userId !== user.id) {
       return NextResponse.json({ error: "Forbidden" }, { status: 403 });
     }
@@ -43,23 +41,22 @@ export async function GET(
 
 export async function PATCH(
   req: Request,
-  context: { params: { id: string } }
+  { params }: { params: { id: string } }
 ) {
   try {
     const user = await getUser();
     if (!user) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
 
-    const id = Number(context.params.id);
+    const id = Number(params.id);
     const license = await prisma.license.findUnique({ where: { id } });
     if (!license) return NextResponse.json({ error: "License not found" }, { status: 404 });
 
-    // resellers can only modify their own licenses
     if (user.role === "reseller" && license.userId !== user.id) {
       return NextResponse.json({ error: "Forbidden" }, { status: 403 });
     }
 
     const body = await req.json();
-    // Support both { action: 'resetHwid' } and { field, value }
+
     if (body.action === "resetHwid" || body.field === "resetHwid") {
       const updated = await prisma.license.update({
         where: { id },
@@ -73,7 +70,6 @@ export async function PATCH(
       return NextResponse.json({ error: "Invalid field" }, { status: 400 });
     }
 
-    // Toggle if value is undefined, otherwise set provided value
     const newVal = typeof value === "boolean" ? value : !license[field];
 
     const updated = await prisma.license.update({
@@ -90,22 +86,20 @@ export async function PATCH(
 
 export async function DELETE(
   req: Request,
-  context: { params: { id: string } }
+  { params }: { params: { id: string } }
 ) {
   try {
     const user = await getUser();
     if (!user) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
 
-    const id = Number(context.params.id);
+    const id = Number(params.id);
     const license = await prisma.license.findUnique({ where: { id } });
     if (!license) return NextResponse.json({ error: "License not found" }, { status: 404 });
 
-    // Only admin or owning reseller can delete
     if (user.role === "reseller" && license.userId !== user.id) {
       return NextResponse.json({ error: "Forbidden" }, { status: 403 });
     }
 
-    // If reseller deleting own key, refund unused days (days left -> credits)
     if (user.role === "reseller" && license.expiresAt) {
       const now = new Date();
       const expires = new Date(license.expiresAt);

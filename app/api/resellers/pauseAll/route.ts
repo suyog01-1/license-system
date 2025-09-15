@@ -1,30 +1,17 @@
+// app/api/resellers/pauseAll/route.ts
 import { NextResponse } from "next/server";
 import prisma from "@/lib/prisma";
-import { cookies } from "next/headers";
-import jwt from "jsonwebtoken";
-
-const JWT_SECRET = process.env.JWT_SECRET!; // ✅ required in Vercel env
-
-// 🔹 Decode current user
-function getUser() {
-  const token = cookies().get("token")?.value;
-  if (!token) return null;
-  try {
-    return jwt.verify(token, JWT_SECRET) as { id: number; role: string };
-  } catch {
-    return null;
-  }
-}
+import { getUser } from "@/lib/auth"; // ✅ use centralized auth helper
 
 // ===================== POST =====================
 // Body: { resellerId: number, pause: boolean }
 export async function POST(req: Request) {
-  const user = getUser();
-  if (!user || user.role !== "admin") {
-    return NextResponse.json({ error: "Forbidden" }, { status: 403 });
-  }
-
   try {
+    const user = await getUser();
+    if (!user || user.role !== "admin") {
+      return NextResponse.json({ error: "Forbidden" }, { status: 403 });
+    }
+
     const { resellerId, pause } = await req.json();
 
     if (!resellerId || typeof pause !== "boolean") {
@@ -34,7 +21,7 @@ export async function POST(req: Request) {
       );
     }
 
-    // Ensure reseller exists
+    // ✅ Ensure reseller exists
     const reseller = await prisma.user.findUnique({
       where: { id: resellerId, role: "reseller" },
     });
@@ -43,22 +30,23 @@ export async function POST(req: Request) {
       return NextResponse.json({ error: "Reseller not found" }, { status: 404 });
     }
 
-    // Update all licenses created by this reseller
-    await prisma.license.updateMany({
+    // ✅ Update licenses
+    const result = await prisma.license.updateMany({
       where: { userId: resellerId },
       data: { paused: pause },
     });
 
     return NextResponse.json({
       success: true,
+      updatedCount: result.count,
       message: `All licenses for ${reseller.username} have been ${
         pause ? "paused" : "unpaused"
       }.`,
     });
   } catch (err) {
-    console.error("pauseAll error:", err);
+    console.error("POST /api/resellers/pauseAll error:", err);
     return NextResponse.json(
-      { error: "Failed to pause licenses" },
+      { error: "Failed to pause/unpause licenses" },
       { status: 500 }
     );
   }

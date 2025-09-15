@@ -1,23 +1,7 @@
 // app/api/resellers/route.ts
 import { NextResponse } from "next/server";
 import prisma from "@/lib/prisma";
-import { cookies } from "next/headers";
-import jwt from "jsonwebtoken";
-
-const JWT_SECRET = process.env.JWT_SECRET || "dev-secret";
-
-// 🔹 Decode current user (async because cookies() must be awaited)
-async function getUser() {
-  const cookieStore = await cookies();
-  const token = cookieStore.get("token")?.value;
-  if (!token) return null;
-
-  try {
-    return jwt.verify(token, JWT_SECRET) as { id: number; role: string };
-  } catch {
-    return null;
-  }
-}
+import { getUser } from "@/lib/auth"; // ✅ centralize auth logic
 
 // ===================== GET =====================
 export async function GET() {
@@ -61,8 +45,8 @@ export async function POST(req: Request) {
     const newReseller = await prisma.user.create({
       data: {
         username,
-        password,
-        email: `${username}@gmail.com`, // 👈 auto-generate email
+        password, // ⚠️ plaintext — hash with bcrypt before deploy
+        email: `${username}@gmail.com`, // auto-generate placeholder email
         role: "reseller",
         credits: credits ? Number(credits) : 0,
       },
@@ -76,7 +60,7 @@ export async function POST(req: Request) {
         { status: 409 }
       );
     }
-    console.error("POST /resellers error:", err);
+    console.error("POST /api/resellers error:", err);
     return NextResponse.json(
       { error: "Failed to create reseller" },
       { status: 500 }
@@ -100,13 +84,13 @@ export async function DELETE(req: Request) {
       );
     }
 
-    // Delete reseller + cascade delete licenses
+    // Cascade delete licenses + reseller
     await prisma.license.deleteMany({ where: { userId: id } });
     await prisma.user.delete({ where: { id } });
 
     return NextResponse.json({ success: true });
   } catch (err) {
-    console.error("DELETE /resellers error:", err);
+    console.error("DELETE /api/resellers error:", err);
     return NextResponse.json(
       { error: "Failed to delete reseller" },
       { status: 500 }

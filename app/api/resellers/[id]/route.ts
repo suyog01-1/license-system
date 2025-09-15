@@ -1,26 +1,10 @@
 ﻿// app/api/resellers/[id]/route.ts
 import { NextResponse } from "next/server";
 import prisma from "@/lib/prisma";
-import { cookies } from "next/headers";
-import jwt from "jsonwebtoken";
+import { getUser } from "@/lib/auth"; // ✅ centralized helper
 
-const JWT_SECRET = process.env.JWT_SECRET || "dev-secret";
-
-async function getUser() {
-  const cookieStore = await cookies();
-  const token = cookieStore.get("token")?.value;
-  if (!token) return null;
-  try {
-    return jwt.verify(token, JWT_SECRET) as { id: number; role: string };
-  } catch {
-    return null;
-  }
-}
-
-export async function GET(
-  req: Request,
-  context: { params: { id: string } }
-) {
+// ===================== GET =====================
+export async function GET(req: Request, context: { params: { id: string } }) {
   try {
     const user = await getUser();
     if (!user || user.role !== "admin") {
@@ -40,7 +24,10 @@ export async function GET(
       },
     });
 
-    if (!reseller) return NextResponse.json({ error: "Reseller not found" }, { status: 404 });
+    if (!reseller) {
+      return NextResponse.json({ error: "Reseller not found" }, { status: 404 });
+    }
+
     return NextResponse.json(reseller);
   } catch (err) {
     console.error("GET /api/resellers/[id] error:", err);
@@ -48,18 +35,17 @@ export async function GET(
   }
 }
 
-export async function PATCH(
-  req: Request,
-  context: { params: { id: string } }
-) {
+// ===================== PATCH =====================
+export async function PATCH(req: Request, context: { params: { id: string } }) {
   try {
     const user = await getUser();
-    if (!user || user.role !== "admin") return NextResponse.json({ error: "Forbidden" }, { status: 403 });
+    if (!user || user.role !== "admin") {
+      return NextResponse.json({ error: "Forbidden" }, { status: 403 });
+    }
 
     const resellerId = Number(context.params.id);
     const body = await req.json();
 
-    // Only allow credits update for now: { credits: number }
     if (body.credits === undefined) {
       return NextResponse.json({ error: "No credits provided" }, { status: 400 });
     }
@@ -76,17 +62,17 @@ export async function PATCH(
   }
 }
 
-export async function DELETE(
-  req: Request,
-  context: { params: { id: string } }
-) {
+// ===================== DELETE =====================
+export async function DELETE(req: Request, context: { params: { id: string } }) {
   try {
     const user = await getUser();
-    if (!user || user.role !== "admin") return NextResponse.json({ error: "Forbidden" }, { status: 403 });
+    if (!user || user.role !== "admin") {
+      return NextResponse.json({ error: "Forbidden" }, { status: 403 });
+    }
 
     const resellerId = Number(context.params.id);
 
-    // remove reseller licenses and reseller record
+    // ✅ Cleanly cascade delete licenses before user
     await prisma.license.deleteMany({ where: { userId: resellerId } });
     await prisma.user.delete({ where: { id: resellerId } });
 

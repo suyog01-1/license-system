@@ -28,20 +28,39 @@ export async function POST(req: Request) {
     // 🔹 License state checks
     const now = new Date();
     if (license.revoked) {
-      return NextResponse.json({ success: false, error: "License revoked" }, { status: 403 });
+      return NextResponse.json(
+        { success: false, error: "License revoked" },
+        { status: 403 }
+      );
     }
     if (license.paused) {
-      return NextResponse.json({ success: false, error: "License paused" }, { status: 403 });
+      return NextResponse.json(
+        { success: false, error: "License paused" },
+        { status: 403 }
+      );
     }
     if (license.expiresAt && license.expiresAt < now) {
-      return NextResponse.json({ success: false, error: "License expired" }, { status: 403 });
+      // ✅ Mark as expired in DB if not already
+      if (!license.expired) {
+        await prisma.license.update({
+          where: { id: license.id },
+          data: { expired: true },
+        });
+      }
+      return NextResponse.json(
+        { success: false, error: "License expired" },
+        { status: 403 }
+      );
     }
 
     // 🔹 HWID binding
     if (!license.hwid) {
       // First login → bind HWID
       if (!hwid) {
-        return NextResponse.json({ success: false, error: "HWID required" }, { status: 400 });
+        return NextResponse.json(
+          { success: false, error: "HWID required" },
+          { status: 400 }
+        );
       }
 
       await prisma.license.update({
