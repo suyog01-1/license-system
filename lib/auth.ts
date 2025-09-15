@@ -6,7 +6,9 @@ const JWT_SECRET = process.env.JWT_SECRET || "dev-secret";
 
 export function getUser() {
   try {
-    const cookieStore = cookies(); // ✅ no await
+    // explicitly cast cookies() to any so TS stops treating it as a Promise
+    const cookieStore = cookies() as any;
+
     const token = cookieStore.get("token")?.value;
     if (!token) return null;
 

@@ -1,4 +1,4 @@
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 import prisma from "@/lib/prisma";
 import { cookies } from "next/headers";
 import jwt from "jsonwebtoken";
@@ -6,7 +6,7 @@ import jwt from "jsonwebtoken";
 const JWT_SECRET = process.env.JWT_SECRET || "dev-secret";
 
 async function getUser() {
-  const cookieStore = cookies();
+  const cookieStore = await cookies(); // ✅ async in Next 15
   const token = cookieStore.get("token")?.value;
   if (!token) return null;
 
@@ -18,18 +18,18 @@ async function getUser() {
 }
 
 export async function POST(
-  req: Request,
-  { params }: { params: { id: string } }
+  req: NextRequest,
+  context: { params: { id: string } }
 ) {
   try {
-    const user = await getUser();
+    const user = await getUser(); // ✅ now async
     if (!user) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
 
-    const id = Number(params.id);
-    const license = await prisma.license.findUnique({ where: { id } });
+    const id = Number(context.params.id);
 
+    const license = await prisma.license.findUnique({ where: { id } });
     if (!license) {
       return NextResponse.json({ error: "License not found" }, { status: 404 });
     }
@@ -46,9 +46,6 @@ export async function POST(
     return NextResponse.json({ success: true, license: updated });
   } catch (err) {
     console.error("POST /api/licenses/[id]/hwid error:", err);
-    return NextResponse.json(
-      { error: "Failed to reset HWID" },
-      { status: 500 }
-    );
+    return NextResponse.json({ error: "Failed to reset HWID" }, { status: 500 });
   }
 }

@@ -5,7 +5,20 @@ import prisma from "@/lib/prisma";
 // POST /api/auth
 export async function POST(req: Request) {
   try {
-    const { username, password, hwid } = await req.json();
+    const body = await req.json().catch(() => null);
+
+    if (!body) {
+      return NextResponse.json(
+        { success: false, error: "Invalid request body" },
+        { status: 400 }
+      );
+    }
+
+    const { username, password, hwid } = body as {
+      username?: string;
+      password?: string;
+      hwid?: string;
+    };
 
     if (!username || !password) {
       return NextResponse.json(
@@ -27,20 +40,22 @@ export async function POST(req: Request) {
 
     // 🔹 License state checks
     const now = new Date();
+
     if (license.revoked) {
       return NextResponse.json(
         { success: false, error: "License revoked" },
         { status: 403 }
       );
     }
+
     if (license.paused) {
       return NextResponse.json(
         { success: false, error: "License paused" },
         { status: 403 }
       );
     }
+
     if (license.expiresAt && license.expiresAt < now) {
-      // ✅ Mark as expired in DB if not already
       if (!license.expired) {
         await prisma.license.update({
           where: { id: license.id },
@@ -55,7 +70,6 @@ export async function POST(req: Request) {
 
     // 🔹 HWID binding
     if (!license.hwid) {
-      // First login → bind HWID
       if (!hwid) {
         return NextResponse.json(
           { success: false, error: "HWID required" },
@@ -68,7 +82,6 @@ export async function POST(req: Request) {
         data: { hwid },
       });
     } else {
-      // Already bound → enforce HWID match
       if (!hwid || license.hwid !== hwid) {
         return NextResponse.json(
           { success: false, error: "License already in use on another device" },
@@ -78,9 +91,12 @@ export async function POST(req: Request) {
     }
 
     // ✅ Success
-    return NextResponse.json({ success: true, message: "Login successful" });
+    return NextResponse.json({
+      success: true,
+      message: "Login successful",
+    });
   } catch (err) {
-    console.error("POST /auth error:", err);
+    console.error("POST /api/auth error:", err);
     return NextResponse.json(
       { success: false, error: "Internal server error" },
       { status: 500 }

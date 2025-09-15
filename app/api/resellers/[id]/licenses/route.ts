@@ -1,17 +1,20 @@
-﻿// app/api/resellers/[id]/licenses/route.ts
-import { NextResponse } from "next/server";
+﻿import { NextResponse } from "next/server";
 import prisma from "@/lib/prisma";
 import { getUser } from "@/lib/auth"; // ✅ centralized auth
 
 // ===================== GET =====================
-export async function GET(req: Request, context: { params: { id: string } }) {
+export async function GET(
+  req: Request,
+  { params }: { params: Promise<{ id: string }> }
+) {
   try {
     const user = await getUser();
     if (!user) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
 
-    const resellerId = Number(context.params.id);
+    const { id } = await params;
+    const resellerId = Number(id);
 
     // ✅ Allow only admin OR reseller accessing own licenses
     if (user.role !== "admin" && !(user.role === "reseller" && user.id === resellerId)) {
@@ -31,14 +34,18 @@ export async function GET(req: Request, context: { params: { id: string } }) {
 }
 
 // ===================== POST =====================
-export async function POST(req: Request, context: { params: { id: string } }) {
+export async function POST(
+  req: Request,
+  { params }: { params: Promise<{ id: string }> }
+) {
   try {
     const user = await getUser();
     if (!user || user.role !== "admin") {
       return NextResponse.json({ error: "Forbidden" }, { status: 403 });
     }
 
-    const resellerId = Number(context.params.id);
+    const { id } = await params;
+    const resellerId = Number(id);
     const body = await req.json();
 
     if (body.action === "pauseAll") {

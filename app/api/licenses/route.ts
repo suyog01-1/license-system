@@ -93,7 +93,6 @@ export async function POST(req: Request) {
         return NextResponse.json({ error: "Not enough credits" }, { status: 400 });
       }
 
-      // deduct credits
       await prisma.user.update({
         where: { id: user.id },
         data: { credits: { decrement: duration } },
@@ -102,16 +101,20 @@ export async function POST(req: Request) {
       createdBy = reseller.username;
     }
 
-    const newLicense = await prisma.license.create({
-      data: {
-        username,
-        password,
-        role: role || "user",
-        expiresAt: expiryDate,
-        createdBy,
-        userId: user.role === "reseller" ? user.id : null,
-      },
-    });
+    // ✅ build data object safely
+    const data: any = {
+      username,
+      password,
+      role: role || "user",
+      createdBy,
+      userId: user.role === "reseller" ? user.id : null,
+    };
+
+    if (expiryDate !== null) {
+      data.expiresAt = expiryDate;
+    }
+
+    const newLicense = await prisma.license.create({ data });
 
     return NextResponse.json(newLicense);
   } catch (err: any) {

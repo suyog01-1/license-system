@@ -3,12 +3,15 @@
     "",
     "\\app",
     "\\app\\api",
-    "\\app\\api\\login",
-    "\\app\\api\\resellers",
+    "\\app\\api\\licenses",
+    "\\app\\api\\licenses\\[id]",
+    "\\app\\api\\licenses\\[id]\\hwid",
     "\\app\\dashboard",
-    "\\app\\dashboard\\admin",
     "\\app\\dashboard\\reseller",
+    "\\components",
+    "\\components\\ui",
     "\\lib"
   ],
+  "SelectedNode": "\\lib\\auth.ts",
   "PreviewInSolutionExplorer": false
 }
