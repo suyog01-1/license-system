@@ -19,7 +19,7 @@ async function getUser() {
 
 export async function POST(
   req: Request,
-  context: { params: { id: string } }
+  { params }: { params: { id: string } }
 ) {
   try {
     const user = await getUser();
@@ -27,7 +27,7 @@ export async function POST(
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
 
-    const id = Number(context.params.id);
+    const id = Number(params.id);
     const license = await prisma.license.findUnique({ where: { id } });
 
     if (!license) {
