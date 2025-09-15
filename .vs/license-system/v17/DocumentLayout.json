@@ -3,6 +3,14 @@
   "WorkspaceRootPath": "C:\\Users\\suyog\\Downloads\\license-system\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\suyog\\Downloads\\license-system\\app\\api\\resellers\\[id]\\route.ts||{8B382828-6202-11D1-8870-0000F87579D2}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:app\\api\\resellers\\[id]\\route.ts||{8B382828-6202-11D1-8870-0000F87579D2}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\suyog\\Downloads\\license-system\\app\\api\\resellers\\[id]\\licenses\\route.ts||{8B382828-6202-11D1-8870-0000F87579D2}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:app\\api\\resellers\\[id]\\licenses\\route.ts||{8B382828-6202-11D1-8870-0000F87579D2}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\suyog\\Downloads\\license-system\\app\\api\\resellers\\route.ts||{3B902123-F8A7-4915-9F01-361F908088D0}",
       "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:app\\api\\resellers\\route.ts||{3B902123-F8A7-4915-9F01-361F908088D0}"
     },
@@ -17,14 +25,6 @@
     {
       "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\suyog\\Downloads\\license-system\\app\\api\\licenses\\route.ts||{3B902123-F8A7-4915-9F01-361F908088D0}",
       "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:app\\api\\licenses\\route.ts||{3B902123-F8A7-4915-9F01-361F908088D0}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\suyog\\Downloads\\license-system\\app\\api\\resellers\\[id]\\route.ts||{8B382828-6202-11D1-8870-0000F87579D2}",
-      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:app\\api\\resellers\\[id]\\route.ts||{8B382828-6202-11D1-8870-0000F87579D2}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\suyog\\Downloads\\license-system\\app\\api\\resellers\\[id]\\licenses\\route.ts||{8B382828-6202-11D1-8870-0000F87579D2}",
-      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:app\\api\\resellers\\[id]\\licenses\\route.ts||{8B382828-6202-11D1-8870-0000F87579D2}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\suyog\\Downloads\\license-system\\app\\api\\licenses\\[id]\\route.ts||{3B902123-F8A7-4915-9F01-361F908088D0}",
@@ -74,19 +74,141 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 0,
+          "SelectedChildIndex": 9,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 2,
               "Title": "route.ts",
               "DocumentMoniker": "C:\\Users\\suyog\\Downloads\\license-system\\app\\api\\resellers\\route.ts",
               "RelativeDocumentMoniker": "app\\api\\resellers\\route.ts",
               "ToolTip": "C:\\Users\\suyog\\Downloads\\license-system\\app\\api\\resellers\\route.ts",
               "RelativeToolTip": "app\\api\\resellers\\route.ts",
-              "ViewState": "AgIAAFQAAAAAAAAAAAAkwGQAAAAFAAAAAAAAAA==",
+              "ViewState": "AgIAAFQAAAAAAAAAAAAkwGMAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003213|",
               "WhenOpened": "2025-09-15T02:35:15.826Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "page.tsx",
+              "DocumentMoniker": "C:\\Users\\suyog\\Downloads\\license-system\\app\\dashboard\\reseller\\page.tsx",
+              "RelativeDocumentMoniker": "app\\dashboard\\reseller\\page.tsx",
+              "ToolTip": "C:\\Users\\suyog\\Downloads\\license-system\\app\\dashboard\\reseller\\page.tsx",
+              "RelativeToolTip": "app\\dashboard\\reseller\\page.tsx",
+              "ViewState": "AgIAAM4AAAAAAAAAAAAkwN0AAAAUAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003213|",
+              "WhenOpened": "2025-09-14T05:01:25.802Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 10,
+              "Title": "globals.css",
+              "DocumentMoniker": "C:\\Users\\suyog\\Downloads\\license-system\\app\\globals.css",
+              "RelativeDocumentMoniker": "app\\globals.css",
+              "ToolTip": "C:\\Users\\suyog\\Downloads\\license-system\\app\\globals.css",
+              "RelativeToolTip": "app\\globals.css",
+              "ViewState": "AgIAADAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003000|",
+              "WhenOpened": "2025-09-14T22:35:20.564Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 11,
+              "Title": "layout.js",
+              "DocumentMoniker": "C:\\Users\\suyog\\Downloads\\license-system\\app\\layout.js",
+              "RelativeDocumentMoniker": "app\\layout.js",
+              "ToolTip": "C:\\Users\\suyog\\Downloads\\license-system\\app\\layout.js",
+              "RelativeToolTip": "app\\layout.js",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001646|",
+              "WhenOpened": "2025-09-14T21:17:56.449Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "route.ts",
+              "DocumentMoniker": "C:\\Users\\suyog\\Downloads\\license-system\\app\\api\\licenses\\[id]\\route.ts",
+              "RelativeDocumentMoniker": "app\\api\\licenses\\[id]\\route.ts",
+              "ToolTip": "C:\\Users\\suyog\\Downloads\\license-system\\app\\api\\licenses\\[id]\\route.ts",
+              "RelativeToolTip": "app\\api\\licenses\\[id]\\route.ts",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA8AAAAFAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003213|",
+              "WhenOpened": "2025-09-14T03:02:47.227Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "page.tsx",
+              "DocumentMoniker": "C:\\Users\\suyog\\Downloads\\license-system\\app\\dashboard\\admin\\page.tsx",
+              "RelativeDocumentMoniker": "app\\dashboard\\admin\\page.tsx",
+              "ToolTip": "C:\\Users\\suyog\\Downloads\\license-system\\app\\dashboard\\admin\\page.tsx",
+              "RelativeToolTip": "app\\dashboard\\admin\\page.tsx",
+              "ViewState": "AgIAACUCAAAAAAAAAAAkwDcCAAAXAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003213|",
+              "WhenOpened": "2025-09-14T00:29:14.67Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "route.ts",
+              "DocumentMoniker": "C:\\Users\\suyog\\Downloads\\license-system\\app\\api\\login\\route.ts",
+              "RelativeDocumentMoniker": "app\\api\\login\\route.ts",
+              "ToolTip": "C:\\Users\\suyog\\Downloads\\license-system\\app\\api\\login\\route.ts",
+              "RelativeToolTip": "app\\api\\login\\route.ts",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABIAAAAHAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003213|",
+              "WhenOpened": "2025-09-14T00:11:44.736Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "route.ts",
+              "DocumentMoniker": "C:\\Users\\suyog\\Downloads\\license-system\\app\\api\\licenses\\route.ts",
+              "RelativeDocumentMoniker": "app\\api\\licenses\\route.ts",
+              "ToolTip": "C:\\Users\\suyog\\Downloads\\license-system\\app\\api\\licenses\\route.ts",
+              "RelativeToolTip": "app\\api\\licenses\\route.ts",
+              "ViewState": "AgIAAKcAAAAAAAAAAAAkwLoAAAANAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003213|",
+              "WhenOpened": "2025-09-14T00:11:27.426Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 12,
+              "Title": "page.js",
+              "DocumentMoniker": "C:\\Users\\suyog\\Downloads\\license-system\\app\\page.js",
+              "RelativeDocumentMoniker": "app\\page.js",
+              "ToolTip": "C:\\Users\\suyog\\Downloads\\license-system\\app\\page.js",
+              "RelativeToolTip": "app\\page.js",
+              "ViewState": "AgIAAFQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001646|",
+              "WhenOpened": "2025-09-14T04:59:39.33Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "route.ts",
+              "DocumentMoniker": "C:\\Users\\suyog\\Downloads\\license-system\\app\\api\\resellers\\[id]\\route.ts",
+              "RelativeDocumentMoniker": "app\\api\\resellers\\[id]\\route.ts",
+              "ToolTip": "C:\\Users\\suyog\\Downloads\\license-system\\app\\api\\resellers\\[id]\\route.ts",
+              "RelativeToolTip": "app\\api\\resellers\\[id]\\route.ts",
+              "ViewState": "AgIAADUAAAAAAAAAAAAkwFQAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003213|",
+              "WhenOpened": "2025-09-14T04:36:28.393Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "route.ts",
+              "DocumentMoniker": "C:\\Users\\suyog\\Downloads\\license-system\\app\\api\\resellers\\[id]\\licenses\\route.ts",
+              "RelativeDocumentMoniker": "app\\api\\resellers\\[id]\\licenses\\route.ts",
+              "ToolTip": "C:\\Users\\suyog\\Downloads\\license-system\\app\\api\\resellers\\[id]\\licenses\\route.ts",
+              "RelativeToolTip": "app\\api\\resellers\\[id]\\licenses\\route.ts",
+              "ViewState": "AgIAABsAAAAAAAAAAAAkwB0AAAADAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003213|",
+              "WhenOpened": "2025-09-14T04:36:53.255Z",
               "EditorCaption": ""
             },
             {
@@ -99,138 +221,7 @@
               "RelativeToolTip": "lib\\auth.ts",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAoAAAAuAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003213|",
-              "WhenOpened": "2025-09-15T00:55:17.718Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "page.tsx",
-              "DocumentMoniker": "C:\\Users\\suyog\\Downloads\\license-system\\app\\dashboard\\reseller\\page.tsx",
-              "RelativeDocumentMoniker": "app\\dashboard\\reseller\\page.tsx",
-              "ToolTip": "C:\\Users\\suyog\\Downloads\\license-system\\app\\dashboard\\reseller\\page.tsx",
-              "RelativeToolTip": "app\\dashboard\\reseller\\page.tsx",
-              "ViewState": "AgIAAM4AAAAAAAAAAAAkwN0AAAAUAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003213|",
-              "WhenOpened": "2025-09-14T05:01:25.802Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 10,
-              "Title": "globals.css",
-              "DocumentMoniker": "C:\\Users\\suyog\\Downloads\\license-system\\app\\globals.css",
-              "RelativeDocumentMoniker": "app\\globals.css",
-              "ToolTip": "C:\\Users\\suyog\\Downloads\\license-system\\app\\globals.css",
-              "RelativeToolTip": "app\\globals.css",
-              "ViewState": "AgIAADAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003000|",
-              "WhenOpened": "2025-09-14T22:35:20.564Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 11,
-              "Title": "layout.js",
-              "DocumentMoniker": "C:\\Users\\suyog\\Downloads\\license-system\\app\\layout.js",
-              "RelativeDocumentMoniker": "app\\layout.js",
-              "ToolTip": "C:\\Users\\suyog\\Downloads\\license-system\\app\\layout.js",
-              "RelativeToolTip": "app\\layout.js",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001646|",
-              "WhenOpened": "2025-09-14T21:17:56.449Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 6,
-              "Title": "route.ts",
-              "DocumentMoniker": "C:\\Users\\suyog\\Downloads\\license-system\\app\\api\\licenses\\[id]\\route.ts",
-              "RelativeDocumentMoniker": "app\\api\\licenses\\[id]\\route.ts",
-              "ToolTip": "C:\\Users\\suyog\\Downloads\\license-system\\app\\api\\licenses\\[id]\\route.ts",
-              "RelativeToolTip": "app\\api\\licenses\\[id]\\route.ts",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA8AAAAFAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003213|",
-              "WhenOpened": "2025-09-14T03:02:47.227Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "page.tsx",
-              "DocumentMoniker": "C:\\Users\\suyog\\Downloads\\license-system\\app\\dashboard\\admin\\page.tsx",
-              "RelativeDocumentMoniker": "app\\dashboard\\admin\\page.tsx",
-              "ToolTip": "C:\\Users\\suyog\\Downloads\\license-system\\app\\dashboard\\admin\\page.tsx",
-              "RelativeToolTip": "app\\dashboard\\admin\\page.tsx",
-              "ViewState": "AgIAACUCAAAAAAAAAAAkwDcCAAAXAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003213|",
-              "WhenOpened": "2025-09-14T00:29:14.67Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 7,
-              "Title": "route.ts",
-              "DocumentMoniker": "C:\\Users\\suyog\\Downloads\\license-system\\app\\api\\login\\route.ts",
-              "RelativeDocumentMoniker": "app\\api\\login\\route.ts",
-              "ToolTip": "C:\\Users\\suyog\\Downloads\\license-system\\app\\api\\login\\route.ts",
-              "RelativeToolTip": "app\\api\\login\\route.ts",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABIAAAAHAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003213|",
-              "WhenOpened": "2025-09-14T00:11:44.736Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 3,
-              "Title": "route.ts",
-              "DocumentMoniker": "C:\\Users\\suyog\\Downloads\\license-system\\app\\api\\licenses\\route.ts",
-              "RelativeDocumentMoniker": "app\\api\\licenses\\route.ts",
-              "ToolTip": "C:\\Users\\suyog\\Downloads\\license-system\\app\\api\\licenses\\route.ts",
-              "RelativeToolTip": "app\\api\\licenses\\route.ts",
-              "ViewState": "AgIAAKcAAAAAAAAAAAAkwLoAAAANAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003213|",
-              "WhenOpened": "2025-09-14T00:11:27.426Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 12,
-              "Title": "page.js",
-              "DocumentMoniker": "C:\\Users\\suyog\\Downloads\\license-system\\app\\page.js",
-              "RelativeDocumentMoniker": "app\\page.js",
-              "ToolTip": "C:\\Users\\suyog\\Downloads\\license-system\\app\\page.js",
-              "RelativeToolTip": "app\\page.js",
-              "ViewState": "AgIAAFQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001646|",
-              "WhenOpened": "2025-09-14T04:59:39.33Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 4,
-              "Title": "route.ts",
-              "DocumentMoniker": "C:\\Users\\suyog\\Downloads\\license-system\\app\\api\\resellers\\[id]\\route.ts",
-              "RelativeDocumentMoniker": "app\\api\\resellers\\[id]\\route.ts",
-              "ToolTip": "C:\\Users\\suyog\\Downloads\\license-system\\app\\api\\resellers\\[id]\\route.ts",
-              "RelativeToolTip": "app\\api\\resellers\\[id]\\route.ts",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAFEAAAA3AAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003213|",
-              "WhenOpened": "2025-09-14T04:36:28.393Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 5,
-              "Title": "route.ts",
-              "DocumentMoniker": "C:\\Users\\suyog\\Downloads\\license-system\\app\\api\\resellers\\[id]\\licenses\\route.ts",
-              "RelativeDocumentMoniker": "app\\api\\resellers\\[id]\\licenses\\route.ts",
-              "ToolTip": "C:\\Users\\suyog\\Downloads\\license-system\\app\\api\\resellers\\[id]\\licenses\\route.ts",
-              "RelativeToolTip": "app\\api\\resellers\\[id]\\licenses\\route.ts",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABAAAAABAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003213|",
-              "WhenOpened": "2025-09-14T04:36:53.255Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-09-15T00:55:17.718Z"
             },
             {
               "$type": "Document",
@@ -242,8 +233,7 @@
               "RelativeToolTip": ".next\\server\\vendor-chunks\\next.js",
               "ViewState": "AgIAAAAAAAAAAAAAAAAMwGoNAAABAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001646|",
-              "WhenOpened": "2025-09-14T21:08:47.72Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-09-14T21:08:47.72Z"
             },
             {
               "$type": "Document",
@@ -267,8 +257,7 @@
               "RelativeToolTip": "app\\api\\licenses\\[id]\\hwid\\route.ts",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAABEAAAAVAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003213|",
-              "WhenOpened": "2025-09-14T02:57:00.807Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-09-14T02:57:00.807Z"
             },
             {
               "$type": "Document",
