@@ -1,10 +1,9 @@
-// app/api/resellers/pauseAll/route.ts
 import { NextResponse } from "next/server";
 import prisma from "@/lib/prisma";
 import { cookies } from "next/headers";
 import jwt from "jsonwebtoken";
 
-const JWT_SECRET = process.env.JWT_SECRET || "dev-secret";
+const JWT_SECRET = process.env.JWT_SECRET!; // ✅ required in Vercel env
 
 // 🔹 Decode current user
 function getUser() {
@@ -58,6 +57,9 @@ export async function POST(req: Request) {
     });
   } catch (err) {
     console.error("pauseAll error:", err);
-    return NextResponse.json({ error: "Failed to pause licenses" }, { status: 500 });
+    return NextResponse.json(
+      { error: "Failed to pause licenses" },
+      { status: 500 }
+    );
   }
 }

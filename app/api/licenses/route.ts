@@ -6,8 +6,9 @@ import { cookies } from "next/headers";
 const JWT_SECRET = process.env.JWT_SECRET || "dev-secret";
 
 // ===================== Verify Token =====================
-function getUser() {
-  const token = cookies().get("token")?.value;
+async function getUser() {
+  const cookieStore = await cookies();
+  const token = cookieStore.get("token")?.value;
   if (!token) return null;
 
   try {
@@ -19,7 +20,7 @@ function getUser() {
 
 // ===================== GET =====================
 export async function GET() {
-  const user = getUser();
+  const user = await getUser();
   if (!user) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
@@ -48,7 +49,7 @@ export async function GET() {
 
 // ===================== POST =====================
 export async function POST(req: Request) {
-  const user = getUser();
+  const user = await getUser();
   if (!user) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
@@ -98,7 +99,7 @@ export async function POST(req: Request) {
         data: { credits: { decrement: duration } },
       });
 
-      createdBy = reseller.username; // ✅ use username instead of just "reseller"
+      createdBy = reseller.username;
     }
 
     const newLicense = await prisma.license.create({
@@ -124,7 +125,7 @@ export async function POST(req: Request) {
 
 // ===================== PATCH =====================
 export async function PATCH(req: Request) {
-  const user = getUser();
+  const user = await getUser();
   if (!user) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
@@ -160,7 +161,7 @@ export async function PATCH(req: Request) {
 
 // ===================== DELETE =====================
 export async function DELETE(req: Request) {
-  const user = getUser();
+  const user = await getUser();
   if (!user) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }

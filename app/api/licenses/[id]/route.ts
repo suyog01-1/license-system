@@ -1,116 +1,129 @@
+// app/api/licenses/[id]/route.ts
 import { NextResponse } from "next/server";
-import { PrismaClient } from "@prisma/client";
+import prisma from "@/lib/prisma";
+import { cookies } from "next/headers";
+import jwt from "jsonwebtoken";
 
-const prisma = new PrismaClient();
+const JWT_SECRET = process.env.JWT_SECRET || "dev-secret";
 
-/**
- * ✅ DELETE - Delete a license by ID with credit refund
- */
-export async function DELETE(req: Request) {
+async function getUser() {
+  const cookieStore = await cookies();
+  const token = cookieStore.get("token")?.value;
+  if (!token) return null;
   try {
-    const { id, resellerId } = await req.json();
-    const license = await prisma.license.findUnique({ where: { id } });
-
-    if (!license) {
-      return NextResponse.json({ error: "License not found" }, { status: 404 });
-    }
-
-    // refund remaining credits
-    let refund = 0;
-    if (license.expiresAt) {
-      const now = new Date();
-      const expiry = new Date(license.expiresAt);
-      if (expiry > now) {
-        const msLeft = expiry.getTime() - now.getTime();
-        refund = Math.floor(msLeft / (1000 * 60 * 60 * 24));
-      }
-    }
-
-    await prisma.license.delete({ where: { id } });
-
-    if (resellerId && refund > 0) {
-      await prisma.user.update({
-        where: { id: resellerId },
-        data: { credits: { increment: refund } },
-      });
-    }
-
-    return NextResponse.json(
-      { message: "License deleted successfully", refund },
-      { status: 200 }
-    );
-  } catch (error) {
-    console.error("DELETE error:", error);
-    return NextResponse.json(
-      { error: "Failed to delete license" },
-      { status: 500 }
-    );
+    return jwt.verify(token, JWT_SECRET) as { id: number; role: string };
+  } catch {
+    return null;
   }
 }
 
-/**
- * ✅ PATCH - Update license status or reset HWID
- */
-export async function PATCH(req: Request) {
+export async function GET(
+  req: Request,
+  context: { params: { id: string } }
+) {
   try {
-    const { id, field, value } = await req.json();
-    const license = await prisma.license.findUnique({ where: { id } });
+    const user = await getUser();
+    if (!user) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
 
-    if (!license) {
-      return NextResponse.json({ error: "License not found" }, { status: 404 });
+    const id = Number(context.params.id);
+    const license = await prisma.license.findUnique({ where: { id } });
+    if (!license) return NextResponse.json({ error: "License not found" }, { status: 404 });
+
+    // Only admin or owning reseller can view
+    if (user.role === "reseller" && license.userId !== user.id) {
+      return NextResponse.json({ error: "Forbidden" }, { status: 403 });
     }
 
-    // Reset HWID
-    if (field === "resetHwid") {
+    return NextResponse.json(license);
+  } catch (err) {
+    console.error("GET /api/licenses/[id] error:", err);
+    return NextResponse.json({ error: "Failed to fetch license" }, { status: 500 });
+  }
+}
+
+export async function PATCH(
+  req: Request,
+  context: { params: { id: string } }
+) {
+  try {
+    const user = await getUser();
+    if (!user) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+
+    const id = Number(context.params.id);
+    const license = await prisma.license.findUnique({ where: { id } });
+    if (!license) return NextResponse.json({ error: "License not found" }, { status: 404 });
+
+    // resellers can only modify their own licenses
+    if (user.role === "reseller" && license.userId !== user.id) {
+      return NextResponse.json({ error: "Forbidden" }, { status: 403 });
+    }
+
+    const body = await req.json();
+    // Support both { action: 'resetHwid' } and { field, value }
+    if (body.action === "resetHwid" || body.field === "resetHwid") {
       const updated = await prisma.license.update({
         where: { id },
         data: { hwid: null },
       });
-      return NextResponse.json(
-        { message: "HWID reset successfully", license: updated },
-        { status: 200 }
-      );
+      return NextResponse.json(updated);
     }
 
-    // Toggle fields
-    if (!["paused", "revoked", "expired"].includes(field)) {
+    const { field, value } = body;
+    if (!field || !["paused", "revoked", "expired"].includes(field)) {
       return NextResponse.json({ error: "Invalid field" }, { status: 400 });
     }
 
+    // Toggle if value is undefined, otherwise set provided value
+    const newVal = typeof value === "boolean" ? value : !license[field];
+
     const updated = await prisma.license.update({
       where: { id },
-      data: { [field]: value },
+      data: { [field]: newVal },
     });
 
-    return NextResponse.json(updated, { status: 200 });
-  } catch (error) {
-    console.error("PATCH error:", error);
-    return NextResponse.json(
-      { error: "Failed to update license" },
-      { status: 500 }
-    );
+    return NextResponse.json(updated);
+  } catch (err) {
+    console.error("PATCH /api/licenses/[id] error:", err);
+    return NextResponse.json({ error: "Failed to update license" }, { status: 500 });
   }
 }
 
-/**
- * ✅ GET - Fetch license by ID
- */
-export async function GET(req: Request) {
+export async function DELETE(
+  req: Request,
+  context: { params: { id: string } }
+) {
   try {
-    const { searchParams } = new URL(req.url);
-    const id = parseInt(searchParams.get("id") || "0", 10);
+    const user = await getUser();
+    if (!user) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
 
+    const id = Number(context.params.id);
     const license = await prisma.license.findUnique({ where: { id } });
-    if (!license) {
-      return NextResponse.json({ error: "License not found" }, { status: 404 });
+    if (!license) return NextResponse.json({ error: "License not found" }, { status: 404 });
+
+    // Only admin or owning reseller can delete
+    if (user.role === "reseller" && license.userId !== user.id) {
+      return NextResponse.json({ error: "Forbidden" }, { status: 403 });
     }
 
-    return NextResponse.json(license, { status: 200 });
-  } catch (error) {
-    console.error("GET error:", error);
-    return NextResponse.json(
-      { error: "Failed to fetch license" },
-      { status: 500 }
-    );
+    // If reseller deleting own key, refund unused days (days left -> credits)
+    if (user.role === "reseller" && license.expiresAt) {
+      const now = new Date();
+      const expires = new Date(license.expiresAt);
+      if (expires > now) {
+        const daysLeft = Math.ceil((expires.getTime() - now.getTime()) / (1000 * 60 * 60 * 24));
+        if (daysLeft > 0) {
+          await prisma.user.update({
+            where: { id: user.id },
+            data: { credits: { increment: daysLeft } },
+          });
+        }
+      }
+    }
+
+    await prisma.license.delete({ where: { id } });
+    return NextResponse.json({ success: true });
+  } catch (err) {
+    console.error("DELETE /api/licenses/[id] error:", err);
+    return NextResponse.json({ error: "Failed to delete license" }, { status: 500 });
   }
 }
