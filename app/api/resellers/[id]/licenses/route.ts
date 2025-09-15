@@ -1,31 +1,13 @@
-﻿import { NextResponse } from "next/server";
-import prisma from "@/lib/prisma";
-import { cookies } from "next/headers";
-import jwt from "jsonwebtoken";
-
-const JWT_SECRET = process.env.JWT_SECRET!; // ✅ required in env
-
-function getUser() {
-  const token = cookies().get("token")?.value;
-  if (!token) return null;
-  try {
-    return jwt.verify(token, JWT_SECRET) as { id: number; role: string };
-  } catch {
-    return null;
-  }
-}
-
-export async function GET(
+﻿export async function GET(
   req: Request,
-  context: { params: { id: string } }
+  { params }: { params: { id: string } }
 ) {
   try {
-    const user = getUser();
+    const user = await getUser();
     if (!user) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
 
-    const resellerId = Number(context.params.id);
+    const resellerId = Number(params.id);
 
-    // allow admin or the reseller themselves
     if (user.role !== "admin" && !(user.role === "reseller" && user.id === resellerId)) {
       return NextResponse.json({ error: "Forbidden" }, { status: 403 });
     }
@@ -42,18 +24,15 @@ export async function GET(
   }
 }
 
-// POST used for actions like pausing all licenses for a reseller
 export async function POST(
   req: Request,
-  context: { params: { id: string } }
+  { params }: { params: { id: string } }
 ) {
   try {
-    const user = getUser();
-    if (!user || user.role !== "admin") {
-      return NextResponse.json({ error: "Forbidden" }, { status: 403 });
-    }
+    const user = await getUser();
+    if (!user || user.role !== "admin") return NextResponse.json({ error: "Forbidden" }, { status: 403 });
 
-    const resellerId = Number(context.params.id);
+    const resellerId = Number(params.id);
     const body = await req.json();
 
     if (body.action === "pauseAll") {
